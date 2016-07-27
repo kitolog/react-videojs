@@ -8,7 +8,7 @@ var React = require('react');
 module.exports = React.createClass({
     displayName : 'VideoJS',
 
-    componentDidMount () {
+    componentDidMount : function componentDidMount() {
         var self = this;
         var player = videojs(this.refs.video, this.props.options)
             .ready(function () {
@@ -19,7 +19,7 @@ module.exports = React.createClass({
         if (this.props.onPlayerInit) this.props.onPlayerInit(player);
     },
 
-    componentDidUpdate (prevProps) {
+    componentDidUpdate : function (prevProps) {
         if (this.props.src !== prevProps.src) {
             if (this.hasOwnProperty('player') && this.player) {
                 this.player.src({
@@ -30,11 +30,11 @@ module.exports = React.createClass({
         }
     },
 
-    handlePlay () {
+    handlePlay : function handlePlay() {
         if (this.props.onPlay) this.props.onPlay(this.player);
     },
 
-    render () {
+    render : function render() {
         var props = blacklist(this.props, 'children', 'className', 'src', 'type', 'onPlay');
         props.className = cx(this.props.className, 'videojs', 'video-js vjs-default-skin');
 
@@ -43,12 +43,17 @@ module.exports = React.createClass({
             controls : true
         });
 
-        return (
-            <div>
-                <video {... props}>
-                    <source src={this.props.src} type={this.props.type}/>
-                </video>
-            </div>
-        )
+        return React.createElement(
+            'div',
+            null,
+            React.createElement(
+                'video',
+                props,
+                React.createElement('source', {
+                    src  : this.props.src,
+                    type : this.props.type
+                })
+            )
+        );
     }
 });
