@@ -14,7 +14,14 @@ module.exports = React.createClass({
             .ready(function () {
                 self.player = this;
                 self.player.on('play', self.handlePlay);
-                self.player.autoplay(true);
+                if (self.props.autoPlay) {
+                    self.player.autoplay(true);
+                }
+
+                if (self.props.fullScreen) {
+                    console.log('player', self.player);
+                    self.player.requestFullscreen();
+                }
             });
         if (this.props.onPlayerInit) this.props.onPlayerInit(player);
     },
