@@ -18,9 +18,20 @@ module.exports = React.createClass({
                     self.player.autoplay(true);
                 }
 
-                if (self.props.fullScreen) {
-                    console.log('player', self.player);
+                if (self.props.isFullScreen) {
                     self.player.requestFullscreen();
+                }
+
+                if ((typeof self.props.hasControls !== 'undefined')) {
+                    self.player.controls(self.props.hasControls);
+                }
+
+                if ((typeof self.props.onEnd === 'function') && self.props.onEnd) {
+                    self.player.ended((e) => self.props.onEnd(e));
+                }
+                
+                if ((typeof self.props.reportUserActivity === 'function') && self.props.reportUserActivity) {
+                    self.player.reportUserActivity((e) => self.props.reportUserActivity(e));
                 }
             });
         if (this.props.onPlayerInit) this.props.onPlayerInit(player);
