@@ -27,11 +27,15 @@ module.exports = React.createClass({
                 }
 
                 if ((typeof self.props.onEnd === 'function') && self.props.onEnd) {
-                    self.player.ended((e) => self.props.onEnd(e));
+                    self.player.on('ended', function (e) {
+                        self.props.onEnd(e);
+                    });
                 }
-                
-                if ((typeof self.props.reportUserActivity === 'function') && self.props.reportUserActivity) {
-                    self.player.reportUserActivity((e) => self.props.reportUserActivity(e));
+
+                if ((typeof self.props.onLoad === 'function') && self.props.onLoad) {
+                    self.player.on('loadeddata', function (e) {
+                        self.props.onLoad(e);
+                    });
                 }
             });
         if (this.props.onPlayerInit) this.props.onPlayerInit(player);
