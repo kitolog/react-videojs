@@ -37,6 +37,26 @@ module.exports = React.createClass({
                         self.props.onLoad(e);
                     });
                 }
+
+                if ((typeof self.props.onPlay === 'function') && self.props.onPlay) {
+                    self.player.on('play', function (e) {
+                        var currentTime = self.player.currentTime();
+                        self.props.onPlay({
+                            event       : e,
+                            currentTime : currentTime
+                        });
+                    });
+                }
+
+                if ((typeof self.props.onPause === 'function') && self.props.onPause) {
+                    self.player.on('pause', function (e) {
+                        var currentTime = self.player.currentTime();
+                        self.props.onPause({
+                            event       : e,
+                            currentTime : currentTime
+                        });
+                    });
+                }
             });
         if (this.props.onPlayerInit) this.props.onPlayerInit(player);
     },
