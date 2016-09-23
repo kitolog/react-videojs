@@ -6,9 +6,9 @@ var blacklist = require('blacklist');
 var React = require('react');
 
 module.exports = React.createClass({
-    displayName : 'VideoJS',
+    displayName: 'VideoJS',
 
-    componentDidMount : function componentDidMount() {
+    componentDidMount: function componentDidMount() {
         var self = this;
         var player = videojs(this.refs.video, this.props.options)
             .ready(function () {
@@ -42,8 +42,8 @@ module.exports = React.createClass({
                     self.player.on('play', function (e) {
                         var currentTime = self.player.currentTime();
                         self.props.onPlay({
-                            event       : e,
-                            currentTime : currentTime
+                            event: e,
+                            currentTime: currentTime
                         });
                     });
                 }
@@ -52,38 +52,52 @@ module.exports = React.createClass({
                     self.player.on('pause', function (e) {
                         var currentTime = self.player.currentTime();
                         self.props.onPause({
-                            event       : e,
-                            currentTime : currentTime
+                            event: e,
+                            currentTime: currentTime
                         });
                     });
+                }
+
+                if ((typeof self.props.playList === 'object') && self.props.playList) {
+                    console.log('playlist', self.props.playList)
+                    self.player.playlist(self.props.playList);
+                    self.player.playlist.autoadvance(0);
                 }
             });
         if (this.props.onPlayerInit) this.props.onPlayerInit(player);
     },
 
-    componentDidUpdate : function (prevProps) {
+    componentDidUpdate: function (prevProps) {
         if (this.props.src !== prevProps.src) {
             if (this.hasOwnProperty('player') && this.player) {
                 this.player.src({
-                    type : this.props.type,
-                    src  : this.props.src
+                    type: this.props.type,
+                    src: this.props.src
                 });
             }
         }
     },
 
-    handlePlay : function handlePlay() {
+    handlePlay: function handlePlay() {
         if (this.props.onPlay) this.props.onPlay(this.player);
     },
 
-    render : function render() {
-        var props = blacklist(this.props, 'children', 'className', 'src', 'type', 'onPlay');
+    render: function render() {
+        var props = blacklist(this.props, 'children', 'className', 'src', 'type', 'onPlay', 'playList', 'isFullScreen', 'hasControls', 'onEnd', 'containerStyle');
         props.className = cx(this.props.className, 'videojs', 'video-js vjs-default-skin');
 
         assign(props, {
-            ref      : 'video',
-            controls : true
+            ref: 'video',
+            controls: true
         });
+
+        let videoComponent = null;
+        if (this.props.src != 'playlist') {
+            videoComponent = React.createElement('source', {
+                src: this.props.src,
+                type: this.props.type
+            })
+        }
 
         return React.createElement(
             'div',
@@ -91,10 +105,7 @@ module.exports = React.createClass({
             React.createElement(
                 'video',
                 props,
-                React.createElement('source', {
-                    src  : this.props.src,
-                    type : this.props.type
-                })
+                videoComponent
             )
         );
     }
