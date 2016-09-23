@@ -91,7 +91,7 @@ module.exports = React.createClass({
             controls: true
         });
 
-        let videoComponent = null;
+        var videoComponent = null;
         if (this.props.src != 'playlist') {
             videoComponent = React.createElement('source', {
                 src: this.props.src,
