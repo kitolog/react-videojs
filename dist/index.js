@@ -57,6 +57,14 @@ module.exports = React.createClass({
                         });
                     });
                 }
+                
+                if ((typeof self.props.onFullscreenChange === 'function') && self.props.onFullscreenChange) {
+                    self.player.on('fullscreenchange', function (e) {
+                        self.props.onFullscreenChange({
+                            event : e
+                        });
+                    });
+                }
 
                 if ((typeof self.props.playList === 'object') && self.props.playList) {
                     console.log('playlist', self.props.playList)
