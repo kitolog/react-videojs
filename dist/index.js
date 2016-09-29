@@ -80,6 +80,12 @@ module.exports = React.createClass({
                 });
             }
         }
+        
+        if (this.props.hasControls !== prevProps.hasControls) {
+            if (this.hasOwnProperty('player') && this.player) {
+                this.player.controls(this.props.hasControls);
+            }
+        }
     },
 
     handlePlay : function handlePlay() {
