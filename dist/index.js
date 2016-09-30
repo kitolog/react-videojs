@@ -10,7 +10,8 @@ module.exports = React.createClass({
 
     componentDidMount : function componentDidMount() {
         var self = this;
-        var player = videojs(this.refs.video, this.props.options)
+        var player = videojs('#videojsplayer', this.props.options)
+//        var player = videojs(this.refs.video, this.props.options)
             .ready(function () {
                 self.player = this;
                 self.player.on('play', self.handlePlay);
@@ -105,7 +106,8 @@ module.exports = React.createClass({
         props.className = cx(this.props.className, 'videojs', 'video-js vjs-default-skin');
 
         assign(props, {
-            ref      : 'video',
+            id      : 'videojsplayer',
+            // ref      : 'video',
             controls : true
         });
 
