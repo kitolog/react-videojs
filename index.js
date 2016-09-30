@@ -111,13 +111,13 @@ module.exports = React.createClass({
             controls : true
         });
 
-        var videoComponent = null;
-        if (this.props.src != 'playlist') {
-            videoComponent = React.createElement('source', {
-                src  : this.props.src,
-                type : this.props.type
-            })
-        }
+//         var videoComponent = null;
+//         if (this.props.src != 'playlist') {
+//             videoComponent = React.createElement('source', {
+//                 src  : this.props.src,
+//                 type : this.props.type
+//             })
+//         }
 
         return React.createElement(
             'div',
@@ -125,7 +125,10 @@ module.exports = React.createClass({
             React.createElement(
                 'video',
                 props,
-                videoComponent
+                React.createElement('source', {
+                src  : this.props.src,
+                type : this.props.type
+            })
             )
         );
     }
