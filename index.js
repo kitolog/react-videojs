@@ -19,10 +19,6 @@ module.exports = React.createClass({
                     self.player.autoplay(true);
                 }
 
-                if (self.props.isFullScreen) {
-                    self.player.requestFullscreen();
-                }
-
                 if ((typeof self.props.hasControls !== 'undefined')) {
                     self.player.controls(self.props.hasControls);
                 }
@@ -58,43 +54,15 @@ module.exports = React.createClass({
                         });
                     });
                 }
-                
-                if ((typeof self.props.onFullscreenChange === 'function') && self.props.onFullscreenChange) {
-                    self.player.on('fullscreenchange', function (e) {
-                        self.props.onFullscreenChange({
-                            event : e
-                        });
-                    });
-                }
-
-                if ((typeof self.props.playList === 'object') && self.props.playList) {
-                    console.log('playlist', self.props.playList)
-                    self.player.playlist(self.props.playList);
-                    self.player.playlist.autoadvance(0);
-                }
             });
-        if (this.props.onPlayerInit) this.props.onPlayerInit(player);
+        
+        if (this.props.onPlayerInit) {
+            this.props.onPlayerInit(player)
+        }
     },
 
     getPlayerInstance(){
         return this.player;
-    },
-
-    componentDidUpdate : function (prevProps) {
-        if (this.props.src !== prevProps.src) {
-            if (this.hasOwnProperty('player') && this.player) {
-                this.player.src({
-                    type : this.props.type,
-                    src  : this.props.src
-                });
-            }
-        }
-        
-        if (this.props.hasControls !== prevProps.hasControls) {
-            if (this.hasOwnProperty('player') && this.player) {
-                this.player.controls(this.props.hasControls);
-            }
-        }
     },
 
     handlePlay : function handlePlay() {
