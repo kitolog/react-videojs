@@ -8,6 +8,7 @@ var React = require('react');
 module.exports = React.createClass({
     displayName : 'VideoJS',
 
+    
     componentDidMount : function componentDidMount() {
         var self = this;
         var player = videojs('#videojsplayer', this.props.options)
