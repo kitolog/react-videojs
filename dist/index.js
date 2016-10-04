@@ -1,5 +1,3 @@
-'use strict';
-
 var assign = require('object-assign');
 var cx = require('classnames');
 var blacklist = require('blacklist');
