@@ -105,7 +105,7 @@ module.exports = React.createClass({
 
         assign(props, {
 //             id      : 'videojsplayer',
-            ref      : (playerRef) => {this.initPlayer(playerRef)}
+            ref      : (playerRef) => {this.initPlayer(playerRef)},
             controls : true
         });
 
