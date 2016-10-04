@@ -1,3 +1,5 @@
+'use strict';
+
 var assign = require('object-assign');
 var cx = require('classnames');
 var blacklist = require('blacklist');
@@ -6,10 +8,9 @@ var React = require('react');
 module.exports = React.createClass({
     displayName : 'VideoJS',
 
-    initPlayer:function (playerRef) {
-        window.PRe = playerRef;
+    componentDidMount : function componentDidMount() {
         var self = this;
-        var player = videojs(playerRef, this.props.options)
+        var player = videojs('#videojsplayer', this.props.options)
 //        var player = videojs(this.refs.video, this.props.options)
             .ready(function () {
                 self.player = this;
@@ -105,8 +106,8 @@ module.exports = React.createClass({
         props.className = cx(this.props.className, 'videojs', 'video-js vjs-default-skin');
 
         assign(props, {
-//             id      : 'videojsplayer',
-            ref      : (playerRef) => {this.initPlayer(playerRef)},
+            id      : 'videojsplayer',
+            // ref      : 'video',
             controls : true
         });
 
@@ -117,7 +118,7 @@ module.exports = React.createClass({
                 type : this.props.type
             })
         }
-        
+
         return React.createElement(
             'div',
             null,
@@ -127,13 +128,5 @@ module.exports = React.createClass({
                 videoComponent
             )
         );
-
-//         return(
-//             <div>
-//                 <video {...props} ref={(playerRef) => {this.initPlayer(playerRef)}}>
-//                     {videoComponent}
-//                 </video>
-//             </div>
-//         );
     }
 });
