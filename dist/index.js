@@ -8,9 +8,9 @@ var React = require('react');
 module.exports = React.createClass({
     displayName : 'VideoJS',
 
-    componentDidMount : function componentDidMount() {
+    initPlayer:function (playerRef) {
         var self = this;
-        var player = videojs('#videojsplayer', this.props.options)
+        var player = videojs(playerRef, this.props.options)
 //        var player = videojs(this.refs.video, this.props.options)
             .ready(function () {
                 self.player = this;
@@ -118,15 +118,23 @@ module.exports = React.createClass({
                 type : this.props.type
             })
         }
+        
+//         return React.createElement(
+//             'div',
+//             null,
+//             React.createElement(
+//                 'video',
+//                 props,
+//                 videoComponent
+//             )
+//         );
 
-        return React.createElement(
-            'div',
-            null,
-            React.createElement(
-                'video',
-                props,
-                videoComponent
-            )
+        return(
+            <div>
+                <video {...props} ref={(playerRef) => {this.initPlayer(playerRef)}}>
+                    {videoComponent}
+                </video>
+            </div>
         );
     }
 });
