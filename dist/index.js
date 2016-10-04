@@ -7,6 +7,7 @@ module.exports = React.createClass({
     displayName : 'VideoJS',
 
     initPlayer:function (playerRef) {
+        window.PRe = playerRef;
         var self = this;
         var player = videojs(playerRef, this.props.options)
 //        var player = videojs(this.refs.video, this.props.options)
